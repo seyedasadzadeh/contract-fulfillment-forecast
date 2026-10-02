@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "fulfillcast"
+version = "0.1.0"
+description = "Hierarchical Bayesian forecasting of contract fulfillment, behaviour segmentation and drift detection."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Seyed M Asadzadeh" }]
+dependencies = [
+    "numpy>=1.26",
+    "pandas>=2.1",
+    "scipy>=1.11",
+    "pymc>=5.16",
+    "nutpie>=0.13",
+    "arviz>=0.18",
+    "pandera>=0.24",
+    "pydantic>=2.5",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.5", "matplotlib>=3.8", "ipykernel>=6"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/fulfillcast"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["slow: runs MCMC (minutes); deselect with -m 'not slow'"]
+filterwarnings = ["ignore::FutureWarning", "ignore::DeprecationWarning", "ignore::UserWarning"]
+
+[tool.ruff]
+line-length = 120
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
